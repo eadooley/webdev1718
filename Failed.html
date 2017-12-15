@@ -1,0 +1,72 @@
+<DOCTYPE html>
+    <html>
+    
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+            
+        </script>
+        <style>
+            h2 {
+    font-family: verdana;
+    font-size: 20px;
+    color: white;
+    }
+            body {
+                background-color: green;
+            }
+            p {
+                font-family: verdana;
+            }
+        </style>
+        <script>
+        <center><button type="button" class="btn btn-primary btn-block btn-lg">Failed Inspections</button></center>
+        var url= 'https://data.cityofchicago.org/resource/cwig-ma7x.json'
+          $("button").click(function(){
+               console.log (url);
+              
+              $(
+                
+                        $.getJSON(url)
+                            .done(function(data){
+                                console.log(data);
+                            $.each(data, function(index, value){
+                            if ((value.results == "Fail") && (value.facility_type != "undefined"))
+                                {
+                              var html = "<div class='panel panel-primary' style='background-color: #e8f0ff;'><h1 class='panel-heading'>" + value.dba_name + "</h1>" +
+                                            "<p class='panel-body'><strong>Facility Type:</strong> " + value.facility_type + "<br>" +
+                                            "<strong>Address:</strong> " + value.address + "<br>" +
+                                            "<strong>Risk Level:</strong> " + value.risk + "<br>" +
+                                            "<strong>Violations:</strong> <small><small>" + value.violations + "</small></small><br>" +
+                                            "</p>" +
+                                            "</div>";
+                                }          
+                            $("body").append(html);
+                            });
+                    })
+                
+                })
+                
+            );
+      
+        </script>
+    
+      
+    </head>
+
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <div id="div1">
+            <center><h2>Failed Health Inspections</h2></center>
+        </div>
+
+        <hr><center>
+            <p style="margin-bottom:3px"><a href="https://data.cityofchicago.org/resource/cwig-ma7x.json" target="_blank" style="font-size:12px;font-weight:bold;text-decoration:none;color:#333333;font-family:arial;">Some Food Inspections</a></p>
+            <iframe width="600px" title="Food Inspections - Map" height="425px" src="https://data.cityofchicago.org/resource/cwig-ma7x.json" frameborder="0"scrolling="no"><a href="https://data.cityofchicago.org/Health-Human-Services/Food-Inspections-Map/cnfp-tsxc" title="Food Inspections - Map" target="_blank">Food Inspections - Map</a></iframe>
+        </center><hr>
+        
+        <div id="results">
+            
+        </div>
+    </body>
+
+    </html>
