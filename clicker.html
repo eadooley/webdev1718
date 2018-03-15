@@ -1,0 +1,80 @@
+<!D0OCTYPE html>
+<html> 
+    <head> 
+        <title></title> 
+        
+        
+        <style>
+            
+          canvas {
+             background-image: url("images.jpg");
+        }   
+            
+        </style>
+     
+    </head> 
+    <body> 
+    
+        <canvas onclick="myFunction(event)" id="myCanvas" width="800" height="400" style="border:19px solid red;"></canvas>
+        
+        <script>
+        
+            function myOtherFunction(event){
+                if (score==0)(lives==3);
+                    alert("Click the square dude that moves around the screen");
+                    location.reload();
+                    
+                }
+            
+            var canvas = document.getElementById("myCanvas");
+            var ctx = canvas.getContext("2d");
+            var score=0;
+            var lives=2;
+            var randx=50;
+            var randy=50;
+            ctx.textAlign="center";
+            ctx.font="55px serif";
+            ctx.fillText("Lives: "+lives, 400, 180);
+            ctx.fillText("Score: "+score, 400, 270);
+            ctx.fillText("Click the square boi 20 times to win", 400, 350);
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(randx, randy, 25, 25);
+           
+            function myFunction(event){
+                var xpos=event.clientX;
+                var ypos=event.clientY;
+                if (xpos>=randx && xpos<=randx+100 && ypos>=randy && ypos<=randy+100){
+                    ctx.clearRect(0, 0, 800, 800);
+                    score++;
+                    ctx.fillText("Score: "+score, 400, 270);
+                    ctx.fillText("Lives: "+lives, 400, 180);
+                    ctx.fillText("Click the square boi 20 times to win", 400, 350);
+                    randx=Math.random()*800;
+                    randy=Math.random()*400;
+                    ctx.fillRect(randx, randy, 25, 25);
+                } else {
+                    ctx.clearRect(0, 0, 800, 800);
+                    lives--;
+                    ctx.fillText("Score: "+score, 400, 270);
+                    ctx.fillText("Lives: "+lives, 400, 180);
+                    ctx.fillText("Click the square boi 20 times to win", 400, 350);
+                    randx=Math.random()*800;
+                    randy=Math.random()*400;
+                    
+                    ctx.fillRect(randx, randy, 25, 25);
+                    if (lives==0){
+                        alert("haha loser");
+                        location.reload();
+                    }
+                }
+                if (score==20){
+                    alert("yay u win");
+                    location.reload();
+                }
+            }
+                if (score==0)(lives==3)
+                alert("click on the square boy 20 times to win")
+                
+        </script>
+    </body> 
+</html>
