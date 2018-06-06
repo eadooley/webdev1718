@@ -1,6 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <style>
+  
+    h1 {
+      font-family: Sans-serif;
+    }
+  </style>
+  <body>
+    <h1><center>Ethan Dooley's Camera</center></h1>
+  </body>
 <video id="player" controls autoplay></video>
 <button id="capture">Capture</button>
-<canvas id="canvas" width=320 height=240></canvas>
+<center><canvas id="canvas" width=320 height=240></canvas></center> 
 <script>
   const player = document.getElementById('player');
   const canvas = document.getElementById('canvas');
@@ -24,3 +35,4 @@
       player.srcObject = stream;
     });
 </script>
+</html>
