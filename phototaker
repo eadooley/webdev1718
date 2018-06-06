@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <style>
+  
+    h1 {
+      font-family: Sans-serif;
+    }
+  </style>
+  <body>
+    <h1><center>Ethan Dooley's Camera</center></h1>
+  </body>
+<video id="player" controls autoplay></video>
+<button id="capture">Capture</button>
+<center><canvas id="canvas" width=320 height=240></canvas></center> 
+<script>
+  const player = document.getElementById('player');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const captureButton = document.getElementById('capture');
+
+  const constraints = {
+    video: true,
+  };
+
+  captureButton.addEventListener('click', () => {
+    context.drawImage(player, 0, 0, canvas.width, canvas.height);
+
+    // Stop all video streams.
+    player.srcObject.getVideoTracks().forEach(track => track.stop());
+  });
+
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      // Attach the video stream to the video element and autoplay.
+      player.srcObject = stream;
+    });
+</script>
+</html>
