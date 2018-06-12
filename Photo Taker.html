@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <meta name="format-detection" content="telephone=no">
   <style>
   
     h1 {
@@ -8,7 +9,11 @@
   </style>
   <body>
     <h1><center>Ethan Dooley's Camera</center></h1>
-  </body>
+
+
+  NIST Telephone Time-of-Day Service 
+<a href="tel:+1-312-802-7756">+1 (312) 802-7756</a>
+
 <video id="player" controls autoplay></video>
 <button id="capture">Capture</button>
 <center><canvas id="canvas" width=320 height=240></canvas></center> 
@@ -34,5 +39,33 @@
       // Attach the video stream to the video element and autoplay.
       player.srcObject = stream;
     });
+    
+  if (window.DeviceOrientationEvent) {
+  window.addEventListener('deviceorientation', deviceOrientationHandler, false);
+  document.getElementById("doeSupported").innerText = "Supported!";
+}
 </script>
+<p>The thing where it displayed your location on the map wouldn't work no matter how
+many times I tried to fix it. I did the next best thing and gave you some coordinates.</p>
+<button onclick="getLocation()">Click to get your coordinates</button>
+
+<p id="demo"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude;
+}
+</script>
+</body>
 </html>
