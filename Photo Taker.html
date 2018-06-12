@@ -9,7 +9,74 @@
   </style>
   <body>
     <h1><center>Ethan Dooley's Camera</center></h1>
+    <button id="fs-doc-button">Go Fullscreen</button>
+		<button id="fs-exit-doc-button">Exit Fullscreen</button>
+    <script>
+    var requestFullscreen = function (ele) {
+	if (ele.requestFullscreen) {
+		ele.requestFullscreen();
+	} else if (ele.webkitRequestFullscreen) {
+		ele.webkitRequestFullscreen();
+	} else if (ele.mozRequestFullScreen) {
+		ele.mozRequestFullScreen();
+	} else if (ele.msRequestFullscreen) {
+		ele.msRequestFullscreen();
+	} else {
+		console.log('Fullscreen API is not supported.');
+	}
+};
 
+var exitFullscreen = function () {
+	if (document.exitFullscreen) {
+		document.exitFullscreen();
+	} else if (document.webkitExitFullscreen) {
+		document.webkitExitFullscreen();
+	} else if (document.mozCancelFullScreen) {
+		document.mozCancelFullScreen();
+	} else if (document.msExitFullscreen) {
+		document.msExitFullscreen();
+	} else {
+		console.log('Fullscreen API is not supported.');
+	}
+};
+
+
+
+
+var fsDocButton = document.getElementById('fs-doc-button');
+var fsExitDocButton = document.getElementById('fs-exit-doc-button');
+
+fsDocButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	requestFullscreen(document.documentElement);
+});
+
+fsExitDocButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	exitFullscreen();
+});
+
+
+
+
+var fsVidButton = document.getElementById('fs-vid-button');
+var video = document.getElementById('video');
+
+fsVidButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	requestFullscreen(video);
+});
+
+
+
+var fsImgButton = document.getElementById('fs-img-button');
+var image = document.getElementById('image');
+
+fsImgButton.addEventListener('click', function(e) {
+	e.preventDefault();
+	requestFullscreen(image);
+});
+</script>
 
   NIST Telephone Time-of-Day Service 
 <a href="tel:+1-312-802-7756">+1 (312) 802-7756</a>
@@ -22,18 +89,14 @@
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
   const captureButton = document.getElementById('capture');
-
   const constraints = {
     video: true,
   };
-
   captureButton.addEventListener('click', () => {
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
-
     // Stop all video streams.
     player.srcObject.getVideoTracks().forEach(track => track.stop());
   });
-
   navigator.mediaDevices.getUserMedia(constraints)
     .then((stream) => {
       // Attach the video stream to the video element and autoplay.
@@ -45,26 +108,47 @@
   document.getElementById("doeSupported").innerText = "Supported!";
 }
 </script>
-<p>The thing where it displayed your location on the map wouldn't work no matter how
-many times I tried to fix it. I did the next best thing and gave you some coordinates.</p>
-<button onclick="getLocation()">Click to get your coordinates</button>
+<p id="demo">Click the button to get your position.</p>
 
-<p id="demo"></p>
+<button onclick="getLocation()">Try It</button>
+
+<div id="mapholder"></div>
 
 <script>
 var x = document.getElementById("demo");
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
 function showPosition(position) {
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
+    var latlon = position.coords.latitude + "," + position.coords.longitude;
+    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+    +latlon+"&zoom=14&size=400x300&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
+    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+}
+//To use this code on your website, get a free API key from Google.
+//Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred."
+            break;
+    }
 }
 </script>
 </body>
